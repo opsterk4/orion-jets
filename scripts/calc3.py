@@ -25,7 +25,8 @@ from typing import Literal
 def main(
     x: float,
     y: float,
-    operacion: Literal["sumar", "restar"] = "sumar",
+    precision: int = 1,
+    operacion: Literal["sumar", "restar", "multiplicar", "dividir"] = "sumar",
     verbose: bool = False,
 ) -> None:
     """
@@ -34,6 +35,8 @@ def main(
     Parámetros:
     - x: Primer número.
     - y: Segundo número.
+    - precision: valor entero del numero de decimales a mostrar.
+                 Por defecto, muestra un decimal   
     - operacion: "sumar" o "restar".
     - verbose: Si es True, imprime solo el resultado; si es False,
       imprime la operación completa.
@@ -44,9 +47,17 @@ def main(
     elif operacion == "restar":
         resultado = x - y
         operador = "-"
+    elif operacion == "multiplicar":
+        resultado = x * y
+        operador = "*"
+    elif operacion == "dividir":
+        resultado = x / y
+        operador = "/"
     else:
         # Cyclopts mostrará este error de forma adecuada en la CLI
-        raise ValueError('La operación debe ser "sumar" o "restar".')
+        raise ValueError('La operación debe ser "sumar", "restar", "multiplicar" y "dividir".')
+
+    resultado = round(resultado, ndigits=precision)
 
     if verbose:
         print(f"{x} {operador} {y} = {resultado}")
